@@ -4,22 +4,18 @@ import org.rick.guitar.enums.Builder;
 import org.rick.guitar.enums.Type;
 import org.rick.guitar.enums.Wood;
 
-public class GuitarSpec {
+public abstract class InstrumentSpec {
 
     private Builder builder;
     private String model;
     private Type type;
-    private int numStrings;
     private Wood backWood;
     private Wood topWood;
 
-
-    public GuitarSpec(Builder builder, String model, Type type,
-                      int numStrings, Wood backWood, Wood topWood) {
+    public InstrumentSpec(Builder builder, String model, Type type, Wood backWood, Wood topWood) {
         this.builder = builder;
         this.model = model;
         this.type = type;
-        this.numStrings = numStrings;
         this.backWood = backWood;
         this.topWood = topWood;
     }
@@ -44,11 +40,7 @@ public class GuitarSpec {
         return topWood;
     }
 
-    public int getNumStrings() {
-        return numStrings;
-    }
-
-    public boolean matches(GuitarSpec otherSpec) {
+    public boolean matches(InstrumentSpec otherSpec) {
         if (builder != otherSpec.builder) {
             return false;
         }
@@ -59,9 +51,7 @@ public class GuitarSpec {
         if (type != otherSpec.type) {
             return false;
         }
-        if (numStrings != otherSpec.numStrings) {
-            return false;
-        }
+
         if (backWood != otherSpec.backWood) {
             return false;
         }
@@ -70,5 +60,4 @@ public class GuitarSpec {
         }
         return true;
     }
-
 }

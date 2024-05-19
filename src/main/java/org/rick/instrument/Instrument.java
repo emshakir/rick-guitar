@@ -1,16 +1,17 @@
 package org.rick.guitar;
 
-
-public class Guitar {
+public abstract class Instrument {
 
     private String serialNumber;
-    private double price;
-    private GuitarSpec guitarSpec;
 
-    public Guitar(String serialNumber, double price, GuitarSpec guitarSpec) {
+    private double price;
+
+    private InstrumentSpec instrumentSpec;
+
+    public Instrument(String serialNumber, double price, InstrumentSpec instrumentSpec) {
         this.serialNumber = serialNumber;
         this.price = price;
-        this.guitarSpec = guitarSpec;
+        this.instrumentSpec = instrumentSpec;
     }
 
     public String getSerialNumber() {
@@ -25,8 +26,7 @@ public class Guitar {
         return price;
     }
 
-    public GuitarSpec getGuitarSpec() {
-        return guitarSpec;
+    public InstrumentSpec getInstrumentSpec() {
+        return instrumentSpec;
     }
-
 }
