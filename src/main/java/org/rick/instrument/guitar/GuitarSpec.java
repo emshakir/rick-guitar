@@ -1,8 +1,9 @@
-package org.rick.guitar;
+package org.rick.instrument.guitar;
 
 import org.rick.guitar.enums.Builder;
 import org.rick.guitar.enums.Type;
 import org.rick.guitar.enums.Wood;
+import org.rick.instrument.InstrumentSpec;
 
 public class GuitarSpec extends InstrumentSpec {
 

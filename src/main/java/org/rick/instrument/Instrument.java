@@ -1,4 +1,4 @@
-package org.rick.guitar;
+package org.rick.instrument;
 
 public abstract class Instrument {
 

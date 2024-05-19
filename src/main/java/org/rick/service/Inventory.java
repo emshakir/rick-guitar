@@ -1,4 +1,11 @@
-package org.rick.guitar;
+package org.rick.service;
+
+import org.rick.instrument.guitar.Guitar;
+import org.rick.instrument.guitar.GuitarSpec;
+import org.rick.instrument.Instrument;
+import org.rick.instrument.InstrumentSpec;
+import org.rick.instrument.mandolin.Mandolin;
+import org.rick.instrument.mandolin.MandolinSpec;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -38,9 +45,11 @@ public class Inventory {
     public List<Guitar> search(GuitarSpec searchGuitarSpec) {
         List<Guitar> searchedGuitars = new ArrayList<>();
         for (Iterator<Instrument> i = instruments.iterator(); i.hasNext(); ) {
-            Guitar guitar = (Guitar) i.next();
-            if (guitar.getInstrumentSpec().matches(searchGuitarSpec)) {
-                searchedGuitars.add(guitar);
+            Instrument instrument = (Instrument) i.next();
+            if (instrument instanceof Guitar guitar) {
+                if (guitar.getInstrumentSpec().matches(searchGuitarSpec)) {
+                    searchedGuitars.add(guitar);
+                }
             }
         }
         return searchedGuitars;
@@ -49,9 +58,11 @@ public class Inventory {
     public List<Mandolin> search(MandolinSpec searchGuitarSpec) {
         List<Mandolin> searchedMandolins = new ArrayList<>();
         for (Iterator<Instrument> i = instruments.iterator(); i.hasNext(); ) {
-            Mandolin mandolin = (Mandolin) i.next();
-            if (mandolin.getInstrumentSpec().matches(searchGuitarSpec)) {
-                searchedMandolins.add(mandolin);
+            Instrument instrument = (Instrument) i.next();
+            if (instrument instanceof Mandolin mandolin) {
+                if (mandolin.getInstrumentSpec().matches(searchGuitarSpec)) {
+                    searchedMandolins.add(mandolin);
+                }
             }
         }
         return searchedMandolins;

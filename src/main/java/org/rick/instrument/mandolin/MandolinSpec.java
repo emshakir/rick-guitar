@@ -1,6 +1,7 @@
-package org.rick.guitar;
+package org.rick.instrument.mandolin;
 
 import org.rick.enums.Style;
+import org.rick.instrument.InstrumentSpec;
 import org.rick.guitar.enums.Builder;
 import org.rick.guitar.enums.Type;
 import org.rick.guitar.enums.Wood;

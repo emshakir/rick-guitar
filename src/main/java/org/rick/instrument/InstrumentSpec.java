@@ -1,4 +1,4 @@
-package org.rick.guitar;
+package org.rick.instrument;
 
 import org.rick.guitar.enums.Builder;
 import org.rick.guitar.enums.Type;
