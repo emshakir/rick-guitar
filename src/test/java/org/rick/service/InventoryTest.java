@@ -1,21 +1,18 @@
 package org.rick.service;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.rick.enums.Style;
+import org.rick.enums.InstrumentType;
+import org.rick.enums.Builder;
+import org.rick.enums.Type;
+import org.rick.enums.Wood;
 import org.rick.instrument.Instrument;
-import org.rick.instrument.guitar.Guitar;
-import org.rick.instrument.guitar.GuitarSpec;
+import org.rick.instrument.InstrumentSpec;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.rick.guitar.enums.Builder;
-import org.rick.guitar.enums.Type;
-import org.rick.guitar.enums.Wood;
-import org.rick.instrument.mandolin.Mandolin;
-import org.rick.instrument.mandolin.MandolinSpec;
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 class InventoryTest {
@@ -25,87 +22,85 @@ class InventoryTest {
     @BeforeEach
     void setUp() {
         inventory = new Inventory();
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("instrumentType", InstrumentType.GUITAR);
+        properties.put("builder", Builder.COLLINGS);
+        properties.put("model", "CJ");
+        properties.put("type", Type.ACOUSTIC);
+        properties.put("numStrings", 6);
+        properties.put("topWood", Wood.INDIAN_ROSEWOOD);
+        properties.put("backWood", Wood.SITKA);
+        inventory.addInstrument("11277", 3999.95, new InstrumentSpec(properties));
 
-        inventory.addInstrument("11277", 3999.95,
-                new GuitarSpec(Builder.COLLINGS, "CJ", Type.ACOUSTIC, 6,
-                        Wood.INDIAN_ROSEWOOD, Wood.SITKA));
-        inventory.addInstrument("V95693", 1499.95,
-                new GuitarSpec(Builder.FENDER, "Stratocastor", Type.ELECTRIC, 6,
-                        Wood.ALDER, Wood.ALDER));
-        inventory.addInstrument("V9512", 1549.95,
-                new GuitarSpec(Builder.FENDER, "Stratocastor", Type.ELECTRIC, 6,
-                        Wood.ALDER, Wood.ALDER));
-        inventory.addInstrument("122784", 5495.95,
-                new GuitarSpec(Builder.MARTIN, "D-18", Type.ACOUSTIC, 6,
-                        Wood.MAHOGANY, Wood.ADIRONDACK));
-        inventory.addInstrument("76531", 6295.95,
-                new GuitarSpec(Builder.MARTIN, "OM-28", Type.ACOUSTIC, 6,
-                        Wood.BRAZILIAN_ROSEWOOD, Wood.ADIRONDACK));
-        inventory.addInstrument("70108276", 2295.95,
-                new GuitarSpec(Builder.GIBSON, "Les Paul", Type.ELECTRIC, 6,
-                        Wood.MAHOGANY, Wood.MAHOGANY));
-        inventory.addInstrument("82765501", 1890.95,
-                new GuitarSpec(Builder.GIBSON, "SG '61 Reissue", Type.ELECTRIC, 6,
-                        Wood.MAHOGANY, Wood.MAHOGANY));
-        inventory.addInstrument("77023", 6275.95,
-                new GuitarSpec(Builder.MARTIN, "D-28", Type.ACOUSTIC, 6,
-                        Wood.BRAZILIAN_ROSEWOOD, Wood.ADIRONDACK));
-        inventory.addInstrument("1092", 12995.95,
-                new GuitarSpec(Builder.OLSON, "SJ", Type.ACOUSTIC, 12,
-                        Wood.INDIAN_ROSEWOOD, Wood.CEDAR));
-        inventory.addInstrument("566-62", 8999.95,
-                new GuitarSpec(Builder.RYAN, "Cathedral", Type.ACOUSTIC, 12,
-                        Wood.COCOBOLO, Wood.CEDAR));
-        inventory.addInstrument("629584", 2100.95,
-                new GuitarSpec(Builder.PRS, "Dave Navarro Signature", Type.ELECTRIC,
-                        6, Wood.MAHOGANY, Wood.MAPLE));
+        properties.put("builder", Builder.MARTIN);
+        properties.put("model", "D-18");
+        properties.put("topWood", Wood.MAHOGANY);
+        properties.put("backWood", Wood.ADIRONDACK);
+        inventory.addInstrument("122784", 5495.95, new InstrumentSpec(properties));
 
-        inventory.addInstrument("9019920", 5495.99,
-                new MandolinSpec(Builder.PRS, "F-5G", Type.ACOUSTIC,
-                        Style.A, Wood.MAPLE, Wood.MAPLE));
+        properties.put("builder", Builder.FENDER);
+        properties.put("model", "Stratocastor");
+        properties.put("type", Type.ELECTRIC);
+        properties.put("topWood", Wood.ALDER);
+        properties.put("backWood", Wood.ALDER);
+        inventory.addInstrument("V95693", 1499.95, new InstrumentSpec(properties));
+        inventory.addInstrument("V9512", 1549.95, new InstrumentSpec(properties));
 
-        inventory.addInstrument("9015820", 5458.99,
-                new MandolinSpec(Builder.PRS, "F-6G", Type.ACOUSTIC,
-                        Style.F, Wood.MAPLE, Wood.MAPLE));
+        properties.put("builder", Builder.GIBSON);
+        properties.put("model", "Les Paul");
+        properties.put("topWood", Wood.MAPLE);
+        properties.put("backWood", Wood.MAPLE);
+        inventory.addInstrument("70108276", 2295.95, new InstrumentSpec(properties));
 
+        properties.put("model", "SG '61 Reissue");
+        properties.put("topWood", Wood.MAHOGANY);
+        properties.put("backWood", Wood.MAHOGANY);
+        inventory.addInstrument("82765501", 1890.95, new InstrumentSpec(properties));
 
+        properties.put("instrumentType", InstrumentType.MANDOLIN);
+        properties.put("type", Type.ACOUSTIC);
+        properties.put("model", "F-5G");
+        properties.put("backWood", Wood.MAPLE);
+        properties.put("topWood", Wood.MAPLE);
+        properties.remove("numStrings");
+        inventory.addInstrument("9019920", 5495.99, new InstrumentSpec(properties));
+
+        properties.put("instrumentType", InstrumentType.BANJO);
+        properties.put("model", "RB-3 Wreath");
+        properties.remove("topWood");
+        properties.put("numStrings", 5);
+        inventory.addInstrument("8900231", 2945.95, new InstrumentSpec(properties));
     }
 
     @Test
     void addInstrument() {
-
-        inventory.addInstrument("629584", 2100.95,
-                new GuitarSpec(Builder.PRS, "Dave Navarro Signature", Type.ELECTRIC,
-                        6, Wood.MAHOGANY, Wood.MAPLE));
-
-        inventory.addInstrument("9015820", 5458.99,
-                new MandolinSpec(Builder.PRS, "F-6G", Type.ACOUSTIC,
-                        Style.F, Wood.MAPLE, Wood.MAPLE));
-
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("instrumentType", InstrumentType.GUITAR);
+        properties.put("builder", Builder.COLLINGS);
+        properties.put("model", "CJ");
+        properties.put("type", Type.ACOUSTIC);
+        properties.put("numStrings", 6);
+        properties.put("topWood", Wood.INDIAN_ROSEWOOD);
+        properties.put("backWood", Wood.SITKA);
+        inventory.addInstrument("11277", 3999.95, new InstrumentSpec(properties));
     }
 
     @Test
     void get() {
-        Instrument mandolinIns = inventory.get("9015820");
-        MandolinSpec mandolinSpec = (MandolinSpec) mandolinIns.getInstrumentSpec();
-        assertEquals(mandolinSpec.getStyle(), Style.F);
-
-        Instrument instrumentGui = inventory.get("629584");
-        GuitarSpec guitarSpec = (GuitarSpec) instrumentGui.getInstrumentSpec();
-        assertEquals(guitarSpec.getNumStrings(), 6);
+        Instrument instrument = inventory.get("11277");
+        Map<String, Object> guitar = instrument.getInstrumentSpec().getProperties();
+        Assertions.assertEquals(guitar.get("builder"), Builder.COLLINGS);
+        Assertions.assertEquals(instrument.getPrice(), 3999.95);
     }
 
     @Test
     void search() {
-        GuitarSpec guitarSpec = new GuitarSpec(Builder.PRS, "Dave Navarro Signature", Type.ELECTRIC,
-                6, Wood.MAHOGANY, Wood.MAPLE);
-        List<Guitar> guitars = inventory.search(guitarSpec);
-        assertEquals(guitars.size(), 1);
-
-        MandolinSpec mandolinSpec = new MandolinSpec(Builder.PRS, "F-6G", Type.ACOUSTIC,
-                Style.F, Wood.MAPLE, Wood.MAPLE);
-        List<Mandolin> mandolins = inventory.search(mandolinSpec);
-        assertEquals(mandolins.size(), 1);
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("builder", Builder.GIBSON);
+        properties.put("backWood", Wood.MAPLE);
+        InstrumentSpec whatBryanLikes = new InstrumentSpec(properties);
+        List<Instrument> instruments = inventory.search(whatBryanLikes);
+        Assertions.assertEquals(3, instruments.size());
     }
-    
+
 }

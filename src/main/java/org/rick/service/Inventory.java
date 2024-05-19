@@ -1,11 +1,7 @@
 package org.rick.service;
 
-import org.rick.instrument.guitar.Guitar;
-import org.rick.instrument.guitar.GuitarSpec;
 import org.rick.instrument.Instrument;
 import org.rick.instrument.InstrumentSpec;
-import org.rick.instrument.mandolin.Mandolin;
-import org.rick.instrument.mandolin.MandolinSpec;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,12 +18,7 @@ public class Inventory {
     }
 
     public void addInstrument(String serialNumber, double price, InstrumentSpec instrumentSpec) {
-        Instrument instrument = null;
-        if (instrumentSpec instanceof GuitarSpec) {
-            instrument = new Guitar(serialNumber, price, (GuitarSpec) instrumentSpec);
-        } else if (instrumentSpec instanceof MandolinSpec) {
-            instrument = new Mandolin(serialNumber, price, (MandolinSpec) instrumentSpec);
-        }
+        Instrument instrument = new Instrument(serialNumber, price, instrumentSpec);
         instruments.add(instrument);
     }
 
@@ -42,29 +33,14 @@ public class Inventory {
         return null;
     }
 
-    public List<Guitar> search(GuitarSpec searchGuitarSpec) {
-        List<Guitar> searchedGuitars = new ArrayList<>();
+    public List<Instrument> search(InstrumentSpec instrumentSpec) {
+        List<Instrument> searchedGuitars = new ArrayList<>();
         for (Iterator<Instrument> i = instruments.iterator(); i.hasNext(); ) {
             Instrument instrument = (Instrument) i.next();
-            if (instrument instanceof Guitar guitar) {
-                if (guitar.getInstrumentSpec().matches(searchGuitarSpec)) {
-                    searchedGuitars.add(guitar);
-                }
+            if (instrument.getInstrumentSpec().matches(instrumentSpec)) {
+                searchedGuitars.add(instrument);
             }
         }
         return searchedGuitars;
-    }
-
-    public List<Mandolin> search(MandolinSpec searchGuitarSpec) {
-        List<Mandolin> searchedMandolins = new ArrayList<>();
-        for (Iterator<Instrument> i = instruments.iterator(); i.hasNext(); ) {
-            Instrument instrument = (Instrument) i.next();
-            if (instrument instanceof Mandolin mandolin) {
-                if (mandolin.getInstrumentSpec().matches(searchGuitarSpec)) {
-                    searchedMandolins.add(mandolin);
-                }
-            }
-        }
-        return searchedMandolins;
     }
 }

@@ -1,6 +1,6 @@
 package org.rick.instrument;
 
-public abstract class Instrument {
+public class Instrument {
 
     private String serialNumber;
 

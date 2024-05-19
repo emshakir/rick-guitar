@@ -1,4 +1,4 @@
-package org.rick.guitar.enums;
+package org.rick.enums;
 
 public enum Wood {
 

@@ -1,62 +1,35 @@
 package org.rick.instrument;
 
-import org.rick.guitar.enums.Builder;
-import org.rick.guitar.enums.Type;
-import org.rick.guitar.enums.Wood;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-public abstract class InstrumentSpec {
+public class InstrumentSpec {
 
-    private Builder builder;
-    private String model;
-    private Type type;
-    private Wood backWood;
-    private Wood topWood;
+    private Map<String, Object> properties;
 
-    public InstrumentSpec(Builder builder, String model, Type type, Wood backWood, Wood topWood) {
-        this.builder = builder;
-        this.model = model;
-        this.type = type;
-        this.backWood = backWood;
-        this.topWood = topWood;
-    }
-
-    public Builder getBuilder() {
-        return builder;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public Wood getBackWood() {
-        return backWood;
-    }
-
-    public Wood getTopWood() {
-        return topWood;
-    }
-
-    public boolean matches(InstrumentSpec otherSpec) {
-        if (builder != otherSpec.builder) {
-            return false;
+    public InstrumentSpec(Map<String, Object> properties) {
+        if (properties == null) {
+            this.properties = new HashMap<>();
+        } else {
+            this.properties = new HashMap<>(properties);
         }
-        if ((model != null) && (!model.isEmpty()) &&
-                (!model.equalsIgnoreCase(otherSpec.model))) {
-            return false;
-        }
-        if (type != otherSpec.type) {
-            return false;
-        }
+    }
 
-        if (backWood != otherSpec.backWood) {
-            return false;
-        }
-        if (topWood != otherSpec.topWood) {
-            return false;
+    public Map<String, Object> getProperties() {
+        return properties;
+    }
+
+    public Object getProperty(String name) {
+        return properties.get(name);
+    }
+
+    public boolean matches(InstrumentSpec spec) {
+        for (Iterator<String> i = spec.properties.keySet().iterator(); i.hasNext(); ) {
+            String key = i.next();
+            if (!properties.get(key).equals(spec.getProperty(key))) {
+                return false;
+            }
         }
         return true;
     }
